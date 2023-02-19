@@ -38,6 +38,7 @@ public class ProductController {
             return ResponseEntity.ok(productInputMapper.modelToDto(product));
         } else if (nameLike != null) {
             logger.info("Load all product with name like: {}", nameLike);
+            nameLike = nameLike.replace('*', '%').replace('.', '?');
             List<Product> products = productInputPort.findAllByNameRegex(nameLike);
             if (products.isEmpty()) {
                 return ResponseEntity.noContent().build();
