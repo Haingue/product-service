@@ -12,10 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.websocket.server.PathParam;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -51,27 +49,38 @@ public class ProductController {
             if (products.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
-            return ResponseEntity.ok(productInputPort.findAll().stream()
+            return ResponseEntity.ok(products.stream()
                     .map(productInputMapper::modelToDto).collect(Collectors.toList()));
         }
     }
 
+    @PostMapping("/details")
+    public ResponseEntity<List<ProductDto>> getProductDetails (@RequestBody List<String> idList, Authentication authentication) {
+        logger.info("Load product bi id list: {}", idList);
+        List<Product> products = productInputPort.findAllById(idList.stream().map(UUID::fromString).collect(Collectors.toList()));
+        if (products.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(productInputPort.findAll().stream()
+                .map(productInputMapper::modelToDto).collect(Collectors.toList()));
+    }
+
     @PostMapping
-    public ResponseEntity<ProductDto> addProduct (@RequestBody ProductDto productDto, HttpServletResponse response, Authentication authentication) {
+    public ResponseEntity<ProductDto> addProduct (@RequestBody ProductDto productDto, Authentication authentication) {
         logger.info("Add new product {}: {}", authentication.getName(), productDto.getName());
         Product product = productInputPort.create(productInputMapper.dtoToModel(productDto));
         return new ResponseEntity(productInputMapper.modelToDto(product), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<ProductDto> updateProduct (@RequestBody ProductDto productDto, HttpServletResponse response, Authentication authentication) {
+    public ResponseEntity<ProductDto> updateProduct (@RequestBody ProductDto productDto, Authentication authentication) {
         logger.info("Update product by {}: {}", authentication.getName(), productDto.getId());
         Product product = productInputPort.update(productInputMapper.dtoToModel(productDto));
         return new ResponseEntity(productInputMapper.modelToDto(product), HttpStatus.CREATED);
     }
 
     @DeleteMapping
-    public ResponseEntity deleteProductById (@RequestBody ProductDto productDto, @RequestParam UUID id, HttpServletResponse response, Authentication authentication) {
+    public ResponseEntity deleteProductById (@RequestBody ProductDto productDto, @RequestParam UUID id, Authentication authentication) {
         if (id == null) {
             logger.info("Delete product: {}", productDto.getId());
             productInputPort.delete(productDto.getId());

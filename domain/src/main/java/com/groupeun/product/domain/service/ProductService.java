@@ -11,10 +11,7 @@ import com.groupeun.product.domain.model.ProductType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Data
 @AllArgsConstructor
@@ -35,6 +32,11 @@ public class ProductService implements ProductInputPort {
             throw new ProductNotFound();
         }
         return products;
+    }
+
+    @Override
+    public List<Product> findAllById(Collection<UUID> idList) {
+        return productOutputPort.findAllById(idList);
     }
 
     @Override

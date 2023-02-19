@@ -38,6 +38,12 @@ public class ProductOutputPortImplement implements ProductOutputPort {
     }
 
     @Override
+    public List<Product> findAllById(Collection<UUID> idList) {
+        return store.entrySet().stream().filter(entry -> idList.contains(entry.getKey()))
+                .map(Map.Entry::getValue).collect(Collectors.toList());
+    }
+
+    @Override
     public List<Product> findAllByNameRegex(String nameRegex) {
         return store.values().stream()
                 .filter(product -> product.getName().matches(nameRegex))

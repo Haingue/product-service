@@ -5,15 +5,13 @@ import com.groupeun.product.domain.model.Product;
 import com.groupeun.product.domain.model.ProductCategory;
 import com.groupeun.product.domain.model.ProductType;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public interface ProductOutputPort {
 
     Optional<Product> findOne (UUID id);
     List<Product> findAll ();
+    List<Product> findAllById(Collection<UUID> idList);
     List<Product> findAllByNameRegex (String nameRegex);
     List<Product> search (String nameRegex, ProductType type, ProductCategory category);
 
@@ -24,6 +22,5 @@ public interface ProductOutputPort {
     Optional<Product> update (Product model);
 
     void delete (UUID id);
-
 
 }

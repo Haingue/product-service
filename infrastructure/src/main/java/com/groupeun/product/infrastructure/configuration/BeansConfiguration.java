@@ -3,7 +3,6 @@ package com.groupeun.product.infrastructure.configuration;
 import com.groupeun.product.application.ports.input.ProductInputPort;
 import com.groupeun.product.application.ports.output.ProductOutputPort;
 import com.groupeun.product.domain.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
