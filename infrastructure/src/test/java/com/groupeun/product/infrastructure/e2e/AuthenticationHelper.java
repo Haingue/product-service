@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Component
 public class AuthenticationHelper {
 
-    public static final String KEYCLOAK_URL = "http://api-user.haingue.com/realms/cookeasy/protocol/openid-connect/token";
+    public static final String KEYCLOAK_URL = "http://localhost:8090/realms/cookeasy/protocol/openid-connect/token";
     private static RestTemplate keycloakClient = new RestTemplate();
 
     public static String getAuthentificationToken() {
@@ -22,7 +22,7 @@ public class AuthenticationHelper {
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
-        map.add("client_id", "recipe-app");
+        map.add("client_id", "product-app");
         map.add("username", "pierre.dupont@test.com");
         map.add("password", "azerty");
         map.add("grant_type", "password");

@@ -80,5 +80,11 @@ public class ProductControllerTest {
                 .andExpect(jsonPath("$.description", CoreMatchers.is(dto.getDescription())))
                 .andExpect(jsonPath("$.nutritionalScore", CoreMatchers.is(dto.getNutritionalScore())))
                 .andReturn();
+
+        ProductDto productResult = objectMapper.readValue(result.getResponse().getContentAsByteArray(), ProductDto.class);
+        mvc.perform(MockMvcRequestBuilders.get(endpoint+"?productId="+productResult.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", CoreMatchers.is(dto.getId())))
+                .andExpect(jsonPath("$.name", CoreMatchers.is(dto.getName())));
     }
 }
