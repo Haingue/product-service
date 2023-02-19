@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -40,6 +37,12 @@ public class ProductAdapter implements ProductOutputPort {
     @Override
     public List<Product> findAll() {
         return StreamSupport.stream(productRepository.findAll().spliterator(), false)
+                .map(productOutputMapper::entityToModel).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Product> findAllById(Collection<UUID> idList) {
+        return StreamSupport.stream(productRepository.findAllById(idList).spliterator(), false)
                 .map(productOutputMapper::entityToModel).collect(Collectors.toList());
     }
 
@@ -74,7 +77,7 @@ public class ProductAdapter implements ProductOutputPort {
     @Transactional
     public Optional<Product> update(UUID id, String name, String description, double nutritionalScore, ProductType type, ProductCategory category, Set<Allergen> allergenSet) {
         ProductEntity existingEntity = productRepository.findById(id)
-                .orElseThrow(() -> new ProductNotFound());
+                .orElseThrow(() -> new ProductNotFound(id));
         existingEntity.setName(name);
         existingEntity.setDescription(description);
         existingEntity.setNutritionalScore(nutritionalScore);

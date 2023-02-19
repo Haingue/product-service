@@ -5,15 +5,14 @@ import com.groupeun.product.domain.model.Product;
 import com.groupeun.product.domain.model.ProductCategory;
 import com.groupeun.product.domain.model.ProductType;
 
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public interface ProductInputPort {
 
     Product findOne (UUID id);
     List<Product> findAllByNameRegex (String nameRegex);
     List<Product> findAll ();
+    List<Product> findAllById (Collection<UUID> idList);
     List<Product> search (String nameRegex, ProductType type, ProductCategory category);
 
     Product create (Product product);
