@@ -12,9 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-@Getter
-@Setter
-@Accessors(chain=true)
+@Data
 @NoArgsConstructor
 @Entity
 @Table(name = "product")

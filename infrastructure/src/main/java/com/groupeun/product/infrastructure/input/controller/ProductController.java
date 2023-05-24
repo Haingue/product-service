@@ -4,6 +4,7 @@ import com.groupeun.product.application.ports.input.ProductInputPort;
 import com.groupeun.product.domain.model.Product;
 import com.groupeun.product.infrastructure.input.dto.ProductDto;
 import com.groupeun.product.infrastructure.input.mapper.ProductInputMapper;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,8 @@ public class ProductController {
     private ProductInputMapper productInputMapper;
 
     @GetMapping
-    public ResponseEntity<?> getProduct (@PathParam("productId") String productId, @PathParam("nameLike") String nameLike) {
+    public ResponseEntity<?> getProduct (@PathParam("productId") @Parameter(allowEmptyValue = true) String productId,
+                                         @PathParam("nameLike") String nameLike) {
         if (productId != null) {
             logger.info("Load one product: {}", productId);
             Product product = productInputPort.findOne(UUID.fromString(productId));
