@@ -1,8 +1,7 @@
 name: Java CI with Maven
 
 on:
-  workflow_run:
-    branches: [ "main" ]
+  workflow_dispatch:
   push:
     branches: [ "main" ]
   pull_request:
