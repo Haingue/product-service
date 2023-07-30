@@ -43,9 +43,9 @@
     <dependencies>
         <!-- Domain dependency -->
         <dependency>
-            <groupId>com.groupeun.product</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>domain</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
 
         <!-- Web dependencies -->
