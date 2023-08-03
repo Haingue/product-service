@@ -5,7 +5,10 @@ import com.groupeun.product.domain.model.Product;
 import com.groupeun.product.domain.model.ProductCategory;
 import com.groupeun.product.domain.model.ProductType;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 public interface ProductInputPort {
 

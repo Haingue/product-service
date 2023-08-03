@@ -1,7 +1,6 @@
 package com.groupeun.product.infrastructure.output.entity;
 
 import lombok.*;
-import lombok.experimental.Accessors;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
